@@ -1,0 +1,41 @@
+﻿@model string
+<form>
+    <div id="imageMeme" class="img-fluid d-block mx-auto mb-4" alt="Image"></div>
+
+    <img src="https://via.placeholder.com/150">
+    <div class="form-group">
+        <input type="text" class="form-control" placeholder="Enter text upside...">
+    </div>
+    <div class="form-group">
+        <input type="text" class="form-control" placeholder="Enter text downside...">
+    </div>
+    <button id="download-btn">Download meme</button>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form> 
+
+@if (!string.IsNullOrEmpty(ViewBag.Error))
+{
+    <div class="img-fluid d-block mx-auto mb-4">ViewBag.Error</div>
+}
+
+<script>
+    let img;
+    function preload() {
+        img = loadImage('@Model');
+    }
+
+    function setup() {
+
+        var myCanvas = createCanvas(400, 400);
+        myCanvas.parent("imageMeme");
+        image(img, 0, 0, width, height);
+
+        fill(255);
+        textSize(20);
+        text('Текст на изображении', 50, 50);
+
+        document.getElementById('download-btn').addEventListener('click', function () {
+            saveCanvas('изображение', 'png');
+        });
+    }
+</script>
